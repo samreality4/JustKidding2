@@ -23,7 +23,7 @@ public class TheAndroidJoker extends AppCompatActivity{
 
 
         Intent intent = getIntent();
-        jokeFromJava = intent.getStringExtra("jokefromjava");
+        jokeFromJava = intent.getStringExtra("jokefromcloud");
 
         TextView textview = findViewById(R.id.android_joker);
 

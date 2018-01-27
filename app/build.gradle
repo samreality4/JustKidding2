@@ -51,4 +51,7 @@ dependencies {
     })
 
     testImplementation 'junit:junit:4.12'
+    //compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.56'
+    //annotationProcessor 'com.google.appengine:appengine-api-1.0-sdk:1.9.56'
+    //compile 'com.google.endpoints:endpoints-framework:2.0.9'
 }
