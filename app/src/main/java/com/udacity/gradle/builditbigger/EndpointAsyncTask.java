@@ -43,7 +43,7 @@ public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, St
         }
 
         context = params[0].first;
-        String name = params[0].second;
+        //String name = params[0].second;
 
         try{
             return myApi.joking().execute().getData();
@@ -57,8 +57,6 @@ public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, St
         Intent intent = new Intent(context, TheAndroidJoker.class);
         intent.putExtra("jokefromcloud", result);
         context.startActivity(intent);
-
-
 
         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
     }
