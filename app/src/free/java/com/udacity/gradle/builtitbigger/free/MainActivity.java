@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity{
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
+        interstitialAd.loadAd(adRequest);
 
 
     }
@@ -70,13 +71,21 @@ public class MainActivity extends AppCompatActivity{
 
     public void tellJoke(View view) {
         progressBar.setVisibility(View.VISIBLE);
+        new EndpointAsyncTask().execute(new Pair<Context, String>(this, "jokefromcloud"));
         if(interstitialAd.isLoaded()){
             interstitialAd.show();
         }
-        new EndpointAsyncTask().execute(new Pair<Context, String>(this, "jokefromcloud"));
 
 
 
+
+    }
+
+    //make the progressbar invisible when another activity comes to the foreground.
+    @Override
+    public void onPause(){
+        super.onPause();
+        progressBar.setVisibility(View.GONE);
     }
 
 
@@ -84,7 +93,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-    }
+
 
 
 
