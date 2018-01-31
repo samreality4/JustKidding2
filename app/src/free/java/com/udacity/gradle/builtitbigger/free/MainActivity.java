@@ -7,17 +7,39 @@ import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.udacity.gradle.builditbigger.EndpointAsyncTask;
 import com.udacity.gradle.builditbigger.R;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
+
+    ProgressBar progressBar;
+    private InterstitialAd interstitialAd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        progressBar = findViewById(R.id.progressBar);
+
+        progressBar.setVisibility(View.GONE);
+
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+
     }
 
 
@@ -43,10 +65,28 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
     public void tellJoke(View view) {
+        progressBar.setVisibility(View.VISIBLE);
+        if(interstitialAd.isLoaded()){
+            interstitialAd.show();
+        }
         new EndpointAsyncTask().execute(new Pair<Context, String>(this, "jokefromcloud"));
+
+
 
     }
 
 
-}
+
+    }
+
+
+    }
+
+
+
+
+
