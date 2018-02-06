@@ -3,6 +3,7 @@ package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
@@ -39,7 +40,8 @@ public class TestforNonString {
 
     @Test
     public void AsyncTaskTest(){
-        String result = mock(EndpointAsyncTask.class);
+        EndpointAsyncTask test = new EndpointAsyncTask();
+        test.execute(InstrumentationRegistry.getTargetContext())
 
 
 
@@ -52,3 +54,4 @@ public class TestforNonString {
 
 
 }
+

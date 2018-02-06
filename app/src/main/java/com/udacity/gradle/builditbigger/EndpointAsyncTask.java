@@ -23,6 +23,13 @@ public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, St
 
     private static MyApi myApi = null;
     private Context context;
+    private OnTaskFinished listener;
+
+    /*public EndpointAsyncTask(OnTaskFinished listener){
+        this.listener = listener;
+
+
+    }*/
 
 
     @Override
@@ -57,7 +64,7 @@ public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, St
         Intent intent = new Intent(context, TheAndroidJoker.class);
         intent.putExtra("jokefromcloud", result);
         context.startActivity(intent);
-
+        //listener.onTaskFinished();
         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
     }
 }

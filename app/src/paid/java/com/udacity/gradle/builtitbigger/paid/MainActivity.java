@@ -10,10 +10,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.udacity.gradle.builditbigger.EndpointAsyncTask;
+import com.udacity.gradle.builditbigger.OnTaskFinished;
 import com.udacity.gradle.builditbigger.R;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {//implements OnTaskFinished{
 
     public static ProgressBar progressBar;
 
@@ -61,7 +62,12 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
             progressBar.setVisibility(View.GONE);
         }
-    }
+
+    /*@Override
+    public void onTaskFinished() {
+
+    }*/
+}
 
 
 
