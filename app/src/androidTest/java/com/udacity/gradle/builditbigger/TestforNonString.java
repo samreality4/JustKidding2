@@ -25,11 +25,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.Matchers.allOf;
 import static org.mockito.Mockito.mock;
 
@@ -37,21 +42,41 @@ import static org.mockito.Mockito.mock;
 @RunWith(AndroidJUnit4.class)
 public class TestforNonString {
 
+    final CountDownLatch finalCountDown = new CountDownLatch(1);
+
 
     @Test
-    public void AsyncTaskTest(){
-        EndpointAsyncTask test = new EndpointAsyncTask();
-        test.execute(InstrumentationRegistry.getTargetContext())
+    public void AsyncTaskTest() throws Throwable {
+        final EndpointAsyncTask endpointAsyncTask = new EndpointAsyncTask() {
+
+            @Override
+            protected String doInBackground(Pair<Context, String>... params) {
+                return super.doInBackground();
+            }
 
 
+            @Override
+            protected void onPostExecute(String string){
+                assertNotNull(string);
+                assertFalse(string.equals(""));
+                finalCountDown.countDown();
+
+            }
 
 
+        };
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                endpointAsyncTask.execute();
+            }
+        };
+
+        runnable.run();
+
+        finalCountDown.await(30, TimeUnit.SECONDS);
 
     }
 
-
-
-
-
 }
-
