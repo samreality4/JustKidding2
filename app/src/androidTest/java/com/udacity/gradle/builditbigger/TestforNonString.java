@@ -75,6 +75,7 @@ public class TestforNonString {
 
         runnable.run();
 
+        //wait for 30 second for everything to finish
         finalCountDown.await(30, TimeUnit.SECONDS);
 
     }
