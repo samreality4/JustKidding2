@@ -15,8 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import com.udacity.gradle.builtitbigger.paid.MainActivity;
-import com.udacity.gradle.builtitbigger.paid.MainActivityFragment;
+
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
