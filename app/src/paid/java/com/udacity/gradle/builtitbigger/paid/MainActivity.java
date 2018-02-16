@@ -10,18 +10,20 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.udacity.gradle.builditbigger.EndpointAsyncTask;
-import com.udacity.gradle.builditbigger.OnTaskFinished;
 import com.udacity.gradle.builditbigger.R;
 
 
 public class MainActivity extends AppCompatActivity {//implements OnTaskFinished{
 
     public static ProgressBar progressBar;
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContext = getBaseContext();
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {//implements OnTaskFinished
 
     public void tellJoke(View view) {
         progressBar.setVisibility(View.VISIBLE);
-        new EndpointAsyncTask().execute(new Pair<Context, String>(this, "jokefromcloud"));
+        new EndpointAsyncTask(mContext).execute(new Pair<Context, String>(this, "jokefromcloud"));
 
     }
     //make the progressbar invisible when another activity comes to the foreground.

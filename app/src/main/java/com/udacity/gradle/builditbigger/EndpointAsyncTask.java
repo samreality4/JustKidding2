@@ -22,14 +22,15 @@ import java.io.IOException;
 public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String>{
 
     private static MyApi myApi = null;
-    private Context context;
-    private OnTaskFinished listener;
-
-    /*public EndpointAsyncTask(OnTaskFinished listener){
-        this.listener = listener;
+    private Context mContext;
 
 
-    }*/
+
+    public EndpointAsyncTask(Context context){
+        this.mContext = context;
+
+
+    }
 
 
     @Override
@@ -49,7 +50,7 @@ public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, St
             myApi = builder.build();
         }
 
-        context = params[0].first;
+        //context = params[0].first;
         //String name = params[0].second;
 
         try{
@@ -61,10 +62,10 @@ public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, St
 
     @Override
     protected void onPostExecute(String result){
-        Intent intent = new Intent(context, TheAndroidJoker.class);
+        Intent intent = new Intent(mContext, TheAndroidJoker.class);
         intent.putExtra("jokefromcloud", result);
-        context.startActivity(intent);
+        mContext.startActivity(intent);
         //listener.onTaskFinished();
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
     }
 }

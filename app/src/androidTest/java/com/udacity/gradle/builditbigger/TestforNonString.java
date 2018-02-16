@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.test.InstrumentationRegistry;
@@ -16,6 +17,13 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 
+import com.android.dx.command.Main;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
+import com.udacity.gradle.builtitbigger.free.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -24,6 +32,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -42,23 +51,29 @@ import static org.mockito.Mockito.mock;
 public class TestforNonString {
 
     final CountDownLatch finalCountDown = new CountDownLatch(1);
-
+    Context context;
+    private static MyApi myApi = null;
 
     @Test
     public void AsyncTaskTest() throws Throwable {
-        final EndpointAsyncTask endpointAsyncTask = new EndpointAsyncTask() {
+
+        final EndpointAsyncTask endpointAsyncTask = new EndpointAsyncTask(context) {
 
             @Override
             protected String doInBackground(Pair<Context, String>... params) {
                 return super.doInBackground();
+
             }
 
 
             @Override
             protected void onPostExecute(String string){
-                assertNotNull(string);
-                assertFalse(string.equals(""));
                 finalCountDown.countDown();
+                //make sure it is string
+                assertNotNull(string);
+                //make sure it is NOT empty
+                assertFalse(string.isEmpty());
+
 
             }
 
@@ -75,7 +90,7 @@ public class TestforNonString {
         runnable.run();
 
         //wait for 30 second for everything to finish
-        finalCountDown.await(30, TimeUnit.SECONDS);
+        finalCountDown.await(10, TimeUnit.SECONDS);
 
     }
 

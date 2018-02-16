@@ -9,22 +9,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.udacity.gradle.builditbigger.EndpointAsyncTask;
 import com.udacity.gradle.builditbigger.R;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
     private InterstitialAd interstitialAd;
+    Context mContext;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContext = getBaseContext();
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -33,13 +37,15 @@ public class MainActivity extends AppCompatActivity{
 
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        newInterstitial();
+    }
 
 
+    private void newInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         interstitialAd.loadAd(adRequest);
-
 
     }
 
@@ -67,30 +73,35 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-
-
     public void tellJoke(View view) {
         progressBar.setVisibility(View.VISIBLE);
-        new EndpointAsyncTask().execute(new Pair<Context, String>(this, "jokefromcloud"));
-        if(interstitialAd.isLoaded()){
+        if (interstitialAd.isLoaded()) {
             interstitialAd.show();
+        }
+        interstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    newInterstitial();
+                    progressBar.setVisibility(View.VISIBLE);
+                    new EndpointAsyncTask(mContext).execute(new Pair<>(mContext, "jokefromcloud"));
+
+                }
+            });
+
         }
 
 
-
-
-    }
-
     //make the progressbar invisible when another activity comes to the foreground.
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         progressBar.setVisibility(View.GONE);
     }
+}
 
 
 
-    }
+
 
 
 
