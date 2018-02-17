@@ -1,5 +1,6 @@
 package com.udacity.gradle.builtitbigger.free;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mContext = getBaseContext();
+        mContext = getApplicationContext();
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -77,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         if (interstitialAd.isLoaded()) {
             interstitialAd.show();
+        }else{
+            Toast.makeText(mContext, "error ad", Toast.LENGTH_SHORT);
         }
         interstitialAd.setAdListener(new AdListener() {
                 @Override

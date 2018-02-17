@@ -54,6 +54,8 @@ public class TestforNonString {
     Context context;
     private static MyApi myApi = null;
 
+
+
     @Test
     public void AsyncTaskTest() throws Throwable {
 

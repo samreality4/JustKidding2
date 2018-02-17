@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {//implements OnTaskFinished
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mContext = getBaseContext();
+        mContext = getApplicationContext();
 
         progressBar = findViewById(R.id.progressBar);
 

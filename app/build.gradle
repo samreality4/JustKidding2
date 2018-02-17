@@ -61,7 +61,7 @@ dependencies {
     implementation 'com.android.support:support-v4:26.1.0'
     endpointsServer project(path: ':backend', configuration: 'endpoints')
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.google.android.gms:play-services-ads:11.8.0'
+    freeCompile 'com.google.android.gms:play-services-ads:11.8.0'
     //rewrite the depedency to exlude a certain module to help the duplicate zip error.
     compile(group: 'com.google.api-client', name: 'google-api-client', version: '1.23.0') {
         exclude(group: 'com.google.guava', module: 'guava-jdk5')
